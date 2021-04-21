@@ -1,0 +1,305 @@
+/* ADD */
+.taxonomy-admin_page_category .wrap.nosubsub *,
+.taxonomy-admin_page_category .wrap *
+{
+	color: #707070; 
+}
+
+.taxonomy-admin_page_category .wrap.nosubsub .search-form.wp-clearfix,
+#col-right table tbody .row-actions .inline,
+#col-right table tbody .row-actions .view
+
+{
+	display: none;
+}
+
+
+.taxonomy-admin_page_category h1.wp-heading-inline,
+.taxonomy-admin_page_category .wrap h1,
+.taxonomy-admin_page_category #col-left h2
+{
+	font-weight: 700;
+}
+
+.taxonomy-admin_page_category .wrap h1,
+.taxonomy-admin_page_category #col-left h2,
+.taxonomy-admin_page_category .form-field,
+.taxonomy-admin_page_category .form-field p
+{
+	margin-top: 0px;
+}
+
+.taxonomy-admin_page_category h1.wp-heading-inline,
+.taxonomy-admin_page_category .wrap h1
+{
+	font-size: 35px;
+	margin-bottom: 20px;
+}
+
+.taxonomy-admin_page_category h1.wp-heading-inline {
+	text-align: left !important;
+}
+
+.taxonomy-admin_page_category #col-left h2 {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+.taxonomy-admin_page_category form .form-field,
+.taxonomy-admin_page_category .wrap form .form-field
+{
+	margin-bottom: 20px;
+}
+
+.taxonomy-admin_page_category form label,
+.taxonomy-admin_page_category .wrap form label {
+	font-size: 20px;
+	font-weight: 500;
+	margin-bottom: 10px;
+	cursor: context-menu;
+}
+
+.taxonomy-admin_page_category form select {
+	width: 100%;
+}
+
+.taxonomy-admin_page_category form input,
+.taxonomy-admin_page_category form select
+{
+	color: #212121 !important;
+	background: #e8f0ff;
+	border: solid #b0caff 1px;
+	margin-bottom: 5px !important;
+	padding-left: 10px !important;
+}
+
+.taxonomy-admin_page_category #addtag .form-field p {
+	font-size: 14px;
+}
+
+/* HIDE ADMINITRATOR */
+.taxonomy-admin_page_category form .term-admin_page_hide_admin-wrap label {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.taxonomy-admin_page_category form .term-admin_page_hide_admin-wrap input[type='checkbox'] {
+	/* background: red; */
+	margin: 0px;
+	margin-left: 20px;
+	margin-bottom: 5px;
+}
+/* HIDE ADMINITRATOR */
+
+/* ICONOS */
+.visual-app-builder-icons {
+    width: 100%;
+}
+.visual-app-builder-icons ul {
+	list-style-type: none;
+	padding: 5px;
+	margin: -1px 0 0;
+	display: none;
+}
+.visual-app-builder-icons li {
+	display: inline-block;
+}
+.visual-app-builder-icons a {
+	font-size: 14px;
+	font-family: inherit;
+	display: inline-block;
+	overflow: hidden;
+	text-decoration: none;
+    border: solid #b0caff 1px;
+	padding: 5px 0px;
+	color: #212121;
+	position: relative;
+	width: 100%;
+	background: #e8f0ff;
+}
+.visual-app-builder-icons a .def {
+	padding-left: 10px;
+}
+.visual-app-builder-icons a.open {
+	border-bottom-color: #fff;
+	color: #000;
+}
+.visual-app-builder-icons a .arr {
+	float: right;
+}
+.visual-app-builder-icons .visuallyhidden {
+	display: none;
+}
+.visual-app-builder-icons label {
+	display: inline-block;
+	padding: 4px;
+	cursor: pointer;
+	color: #777;
+	border: 1px solid transparent;
+}
+.visual-app-builder-icons label:hover {
+	color: #000;
+}
+.visual-app-builder-icons :checked + label {
+	color: #000;
+	border-color: #000;
+}
+/* ICONOS */
+
+.taxonomy-admin_page_category form .submit input[type='submit'] {
+	background: #2580EB;
+	color: white !important;
+	font-size: 16px;
+	text-align: center;
+	width: 100%;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.taxonomy-admin_page_category form#addtag input[type='text'],
+.taxonomy-admin_page_category form#addtag input[type='number'],
+.taxonomy-admin_page_category form#addtag select,
+.taxonomy-admin_page_category .wrap form input[type='text'],
+.taxonomy-admin_page_category .wrap form input[type='number'],
+.taxonomy-admin_page_category .wrap form select
+{
+	width: 100%;
+	max-width: 100%;
+}
+
+.taxonomy-admin_page_category form#addtag .form-field,
+.taxonomy-admin_page_category form .submit
+{
+	padding-right: 20px;
+}
+/* ADD */
+
+
+/* TABLE */
+#col-right form#posts-filter .tablenav .bulkactions {
+	display: inline-flex;
+}
+
+#col-right form#posts-filter .tablenav .bulkactions select {
+	height: 30px;
+	margin: 0px;
+	margin-right: 20px;
+}
+#col-right form#posts-filter .tablenav .bulkactions input {
+	background: #2580EB;
+	color: white !important;
+	text-align: center;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+#col-right form#posts-filter table tbody tr th,
+#col-right form#posts-filter table tbody tr td
+{
+	vertical-align: middle;
+}
+
+#col-right form#posts-filter table thead tr th:nth-child(n+4),
+#col-right form#posts-filter table tbody tr td:nth-child(n+4)
+{
+	text-align: center;
+}
+
+#col-right form#posts-filter table tbody tr td.admin_page_icon.column-admin_page_icon span,
+#col-right table tbody .row-actions .edit a
+{
+	color: #2580EB !important;
+}
+
+#col-right table tbody .row-actions .delete a {
+	color: red;
+}
+
+/* SLUG */ 
+#posts-filter thead tr th, 
+#posts-filter tbody tr td
+{
+	width: 20% !important;
+}
+
+td.slug.column-slug,
+th#slug,
+tfoot th.column-slug
+{ 
+	display: none !important;
+}
+
+/* SLUG */
+
+/* TABLE */
+
+
+/* EDIT */
+.taxonomy-admin_page_category .wrap h1 {
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+}
+
+
+.taxonomy-admin_page_category .wrap form#edittag {
+	max-width: 100%;
+	width: 50%;
+	margin: auto;
+}
+
+.taxonomy-admin_page_category .wrap form .form-field th {
+	text-align: center;
+}
+
+.taxonomy-admin_page_category .wrap form .form-field th,
+.taxonomy-admin_page_category .wrap form .form-field td,
+.taxonomy-admin_page_category .wrap form .form-field input[type='text'],
+.taxonomy-admin_page_category .wrap form .form-field input[type='number'],
+.taxonomy-admin_page_category .wrap form .form-field input[type='number'],
+.taxonomy-admin_page_category .wrap form .form-field select,
+.taxonomy-admin_page_category .wrap form .form-field p
+{
+    width: 100%;
+	display: block;
+	padding: 0px;
+	margin: 0px;
+}
+
+.taxonomy-admin_page_category .wrap form .form-field th {
+	margin-bottom: 10px;
+}
+.taxonomy-admin_page_category .wrap form .form-field input[type='text'],
+.taxonomy-admin_page_category .wrap form .form-field input[type='number']
+{
+	margin-bottom: 5px;
+}
+
+.taxonomy-admin_page_category .wrap form .form-field p {
+	margin-bottom: 20px;
+}
+
+
+.taxonomy-admin_page_category .wrap form .term-admin_page_hide_admin-wrap td input {
+	margin: 0px;
+	margin-right: 10px;
+}
+.taxonomy-admin_page_category .wrap form .term-admin_page_hide_admin-wrap td p {
+	display: inline-block;
+}
+
+.taxonomy-admin_page_category .wrap form .edit-tag-actions input[type='submit'] {
+	width: 80%;
+	background: #2580EB;
+    color: white !important;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 500;
+}
+/* EDIT */
+
+
+
+
+
