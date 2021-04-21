@@ -15,7 +15,7 @@ Text Domain:    visual-app-builder
 Domain Path:    /languages
 */
 
-if( !defined( 'ABSPATH') ) exit();
+if( !defined( 'ABSPATH') ) exit(); 
 
 class Fkm_VisualAppBuilder {
   function __construct(){
