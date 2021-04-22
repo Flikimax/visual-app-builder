@@ -10,12 +10,12 @@ Plugin URI:     flikimax.com
 Description:    Visual application builder.
 Version:        1.0
 Author:         Flikimax
-Author URI:     Flikimax.com
+Author URI:     Flikimax.com 
 Text Domain:    visual-app-builder
 Domain Path:    /languages
 */
 
-if( !defined( 'ABSPATH') ) exit(); 
+if (!defined('ABSPATH')) exit(); 
 
 class Fkm_VisualAppBuilder {
   function __construct(){
