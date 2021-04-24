@@ -187,14 +187,7 @@ function admin_page_category_editform_termmeta($term){
     )
   ); 
   # GET WP ROLES 
-  $roles = wp_roles()->role_objects; 
-  
-  //   echo "<pre>roles: ";
-  // print_r( $roles);
-  // echo "</pre>";
-  
-  
-  ?>
+  $roles = wp_roles()->role_objects; ?>
 
   <table class="form-table" role="presentation">
     <tbody>
@@ -202,7 +195,8 @@ function admin_page_category_editform_termmeta($term){
       <tr class="form-field term-admin_page_content-wrap">
         <th scope="row"><label for="admin_page_content">Post Content</label></th>
         <td>
-          <select name="admin_page_content" id="admin_page_content" class="postform">
+          <select name="admin_page_content" id="admin_page_content" class="postform">+
+            <option class="level-1" value=""><?=esc_html__('None', 'visual-app-builder'); ?></option>
             <?php foreach ($posts_visual_app_builder as $key => $post_visual_app_builder): ?>
               <option class="level-0" value="<?=esc_html__($post_visual_app_builder->ID, 'visual-app-builder'); ?>" <?=($admin_page_content == $post_visual_app_builder->ID) ? 'selected' : ''; ?>><?=esc_html__($post_visual_app_builder->post_title, 'visual-app-builder'); ?></option>
             <?php endforeach; ?>
@@ -283,7 +277,6 @@ function fields_save_data_admin_page_category($term_id){
         $GLOBALS['wp_roles']->remove_cap("fkm_{$parent_admin_page->slug}", "fkm_{$_GET['slug']}");
       }
     }
-
     return;
   }
 
@@ -316,14 +309,6 @@ function fields_save_data_admin_page_category($term_id){
 
 
   # PERMISOS
-  
-
-  
-
-  
-  
-
-  // editedtag - add-tag
   if ($admin_page_permissions == 0 || $admin_page_permissions == '0'){
     $roles = array_keys($roles);
     $display_role = ($_POST['action'] == 'add-tag') ? trim($_POST['tag-name']) : $_POST['slug'];
@@ -333,13 +318,6 @@ function fields_save_data_admin_page_category($term_id){
     }
     $admin_page_permissions = "fkm_{$slug}";
 
-    // TODO: AGREGAR CAP AL ADMIN DEPENDIENDO DE SHOW ADMIN Y A LA PAGINA SUPERIOR SI ES QUE LA TIENE 
-
-    // SI ES AGREGAR, AGREGAR CAPS
-    // SI ES EDITAR, REMOVER LAS CAPS ANTERIORES $old_ Y AGREGAR CAPS
-
-
-
     add_role(
       $admin_page_permissions,
       $display_role,
@@ -348,24 +326,8 @@ function fields_save_data_admin_page_category($term_id){
       'upload_files' => true, 
       ) 
     );
-
-    
   }
 
-  // echo "<pre>_POST: ";
-  // print_r( $_POST);
-  // echo "</pre>";
-  // die;
-
-  // echo "<pre>$term_id: ";
-  // print_r( $_POST);
-  // echo "</pre>";
-
-
-  // $GLOBALS['wp_roles']->add_cap("fkm_{$parent->slug}", $admin_page_permissions);
-
-
-  // die;
 
   
   if ($_POST['action'] == 'add-tag' || $_POST['action'] == 'editedtag'){
@@ -386,7 +348,7 @@ function fields_save_data_admin_page_category($term_id){
 
 
   # SE ACTUALIZA EL NOMBRE DEL ROLE
-  if ($_POST['action'] == 'editedtag'){
+  if ($_POST['action'] == 'editedtag' && !fkm_is_role_default($_POST['slug'])){
     $wp_user_roles = get_option('wp_user_roles');
     $wp_user_roles["fkm_{$_POST['slug']}"]['name'] = $_POST['name'];
     update_option('wp_user_roles', $wp_user_roles);

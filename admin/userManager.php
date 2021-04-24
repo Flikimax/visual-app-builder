@@ -13,7 +13,7 @@ function fkm_conver_role_to_display($roleName){
 function fkm_get_currentUser(){
     if (is_user_logged_in()){
         $user = wp_get_current_user();
-        return $user->roles[0];
+        return isset($user->roles[0]) ? $user->roles[0] : null;
     }
 }
 
@@ -24,7 +24,12 @@ function fkm_current_User($userName){
     }
 }
 
-
-// echo "<pre>";
-// print_r( $ );
-// echo "</pre>";
+# VERIFICA SI EL ROLE FUE CREADO POR EL PLUGIN
+function fkm_is_role_default($role) {
+    // if ($role == 'administrator' || $role == 'editor' || $role == 'author' ||
+    //     $role == 'contributor' || $role == 'subscriber'){
+    //         return true;
+    // }  
+    $pos = strpos($role, 'fkm_');
+    return ($pos !== false) ? false : true;
+}

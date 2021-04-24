@@ -31,10 +31,6 @@ class Fkm_VisualAppBuilder {
     require_once FKM_PLUGIN_PATH . '/admin/post_type.php';   # CREAR EL POST TYPE
    
     if (is_admin()) {
-      // TODO: VALIDAR SI EL USUARIO ACTUAL fkm_get_currentUser() inicia con fkm_
-      // remove_submenu_page('upload.php', 'upload.php');    
-
-
       new Fkm_AdminPage(); # SE CREAN LAS ADMIN PAGE
       add_action('admin_init', array($this, 'fkm_admin_init'));
     } 

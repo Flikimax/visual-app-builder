@@ -116,6 +116,9 @@ jQuery(document).ready(function() {
         // PARENT CATEGORY
         jQuery('form#addtag .term-parent-wrap label').text('Parent menu page');
         jQuery('form#addtag .term-parent-wrap p').text('Assign a parent menu page to create a hierarchy.');
+
+        // BULK ACTIONS
+        jQuery('#posts-filter .tablenav.top, #posts-filter .tablenav.bottom').remove();
     }
 
 

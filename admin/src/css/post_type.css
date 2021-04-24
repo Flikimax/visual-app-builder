@@ -231,6 +231,14 @@ tfoot th.column-slug
 
 /* SLUG */
 
+#posts-filter .check-column input[type=checkbox]:checked,
+#posts-filter #admin_page_hide_admin,
+#edittag input#admin_page_hide_admin[type=checkbox]:checked,
+#addtag input#admin_page_hide_admin[type=checkbox]:checked
+{
+	padding-left: 0px !important;
+}
+
 /* TABLE */
 
 
@@ -238,7 +246,8 @@ tfoot th.column-slug
 .taxonomy-admin_page_category .wrap h1 {
 	text-align: center;
 	display: inline-block;
-	width: 100%;
+	width: 100%; 
+	padding-top: 0px;
 }
 
 
