@@ -13,31 +13,31 @@ Permite la creación del contenido que será usado por las páginas de menú.
 
 ![Admin Menus Content](https://flikimax.com/wp-content/uploads/2021/05/Admin-Menus-Content-Board.jpg)
 
-![](https:flikimax.com/wp-content/uploads/2021/05/Xukint-Content.jpg)
+![Xukint Content](https://flikimax.com/wp-content/uploads/2021/05/Xukint-Content.jpg)
 
 
 ### Create Menus Page
 
 Permite la creación de las páginas de menú, con sus respectivos datos, al igual que su contenido previamente creado (Admin Menus Content).
 
-![](https:flikimax.com/wp-content/uploads/2021/05/Create-Menu-Pages.jpg)
+![Create Menu Page](https://flikimax.com/wp-content/uploads/2021/05/Create-Menu-Pages.jpg)
 
-![](https:flikimax.com/wp-content/uploads/2021/05/xukint.jpg)
+![](https://flikimax.com/wp-content/uploads/2021/05/xukint.jpg)
 
 
 ### Página de menú: Xukint
 
-![](https:flikimax.com/wp-content/uploads/2021/05/Xukint-menu-page.jpg)
+![Xukin Menu Page](https://flikimax.com/wp-content/uploads/2021/05/Xukint-menu-page.jpg)
 
 ### Asignar contenido a una página de menú llamada mediante url
 
 Se crea el contenido para la página de menú y se marcan las páginas de menú que tendrán acceso a dicho contenido.
 
-![](https:flikimax.com/wp-content/uploads/2021/05/Calendario.jpg)
+![Calendario](https://flikimax.com/wp-content/uploads/2021/05/Calendario.jpg)
 
 La variable que buscara el contenido es «content», en este ejemplo la ruta quedaría de la siguiente forma: /wp-admin/admin.php?page=fkm-xukint&content=calendario
 
-![](https:flikimax.com/wp-content/uploads/2021/05/Calendario-menu-page.jpg)
+![Calendario Menu Page](https://flikimax.com/wp-content/uploads/2021/05/Calendario-menu-page.jpg)
 
 
 
