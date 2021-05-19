@@ -1,5 +1,4 @@
 <?php
-
 # CONVIERTE EL NOMBRE DEL ROL PARA MOSTRARLO AL USUARIO
 function fkm_conver_role_to_display($roleName){
     global $wp_roles;
@@ -26,10 +25,6 @@ function fkm_current_User($userName){
 
 # VERIFICA SI EL ROLE FUE CREADO POR EL PLUGIN
 function fkm_is_role_default($role) {
-    // if ($role == 'administrator' || $role == 'editor' || $role == 'author' ||
-    //     $role == 'contributor' || $role == 'subscriber'){
-    //         return true;
-    // }  
     $pos = strpos($role, 'fkm_');
     return ($pos !== false) ? false : true;
 }

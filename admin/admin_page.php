@@ -24,38 +24,22 @@ class Fkm_AdminPage {
 
   # SE ENCARGA DE CARGAR METODOS DEL ADMIN PAGE PRINCIPAL
   public function fkm_vab_admin_page_content() {
-    $admin_page = str_replace('-', '_', $_GET['page']);
+    $admin_page = str_replace('fkm-', '', $_GET['page']);
+    $admin_page = str_replace('-', '_', $admin_page);
     (method_exists($this, $admin_page)) ? $this->{$admin_page}() : $this->fkm_vab();
   }
 
   # MUESTRA EL CONTENIDO DE LAS ADMIN PAGE USER
   public function fkm_user_admin_page_content(){
-    // echo $slug = (isset($_GET['content'])) ? $_GET['content'] : $_GET['page'];
-    
-    # CARGAR OTRA PAGINA
-    if (isset($_GET['content'])){
-      $args = array(
-        'name'        => $_GET['content'],
-        'post_type'   => 'visual_app_builder',
-        'post_status' => 'publish',
-        'numberposts' => 1,
-      );
-      $admin_page_content = get_posts($args);
-      # GET POST - CONTENT
-      $content = (isset($admin_page_content[0]->post_content)) ? $admin_page_content[0]->post_content : null;
-    } else { # CARGAR LA PAGINA PRE - DEFINIDA EN CREATE ADMIN PAGES
-      $page = get_terms([
-        'taxonomy'   => 'admin_page_category',
-        'hide_empty' => false,
-        'slug'       => $_GET['page']
-      ])[0];
-      $admin_page_content = get_term_meta($page->term_id, 'admin_page_content', true);
-      # GET POST - CONTENT
-      $content_post = get_post($admin_page_content);
-      $content = (isset($content_post->post_content)) ? $content_post->post_content : null;
+    if (isset($_GET['content']) && !empty($_GET['content'])){
+      $page_slug = $_GET['content'];
+    } else {
+      $page_slug = $_GET['page'];
+      $main = true;
     }
+    $content = $this->get_menu_page_content($page_slug, $main ?? false);
 
-    if ($content){  
+    if ($content){ 
       $content = apply_filters('the_content', $content); ?>
       <div class="contenedor-<?=FKM_TEXT_DOMAIN; ?>">
         <?=$content; ?>
@@ -63,21 +47,60 @@ class Fkm_AdminPage {
       <?php
     } else { 
       $user = wp_get_current_user();
-      if (in_array('administrator', (array) $user->roles)) { ?>
+      if (in_array('administrator', (array) $user->roles)) { # TODO: O USUARIO PRINCIAPL SETEADO ?>
         <div>
-          <h3>Puedes agregar contenido <a href="<?=admin_url('edit.php?post_type=visual_app_builder'); ?>" >aquí</a>.</h3>
+          <h3><?=__('You can add content', 'visual-app-builder'); ?> <a href="<?=admin_url('edit.php?post_type=visual_app_builder'); ?>" style="font-weight: bold;"><?=__('here.', 'visual-app-builder'); ?></a></h3>
         </div>
         <?php
       } else {
         ?>
         <div>
-          <h3>No hay contenido asignado a esta admin page.</a></h3>
+          <h3><?=__('No content assigned.', 'visual-app-builder'); ?></a></h3>
         </div>
         <?php
       }
-      
-      
     } 
+  }
+
+  public function get_menu_page_content($slug_page, $main = false) {
+    $content = null;
+    $slug_page = ltrim($slug_page, 'fkm-');
+    if ($main) {
+      $page = get_terms([
+        'taxonomy'   => 'admin_page_category',
+        'hide_empty' => false,
+        'slug'       => "$slug_page",
+      ])[0];
+      $args = get_term_meta($page->term_id, 'admin_page_content', true);
+      # GET POST
+      $post = get_post($args);
+      if ($post) $content = $post->post_content;
+    } else {
+      $args = array(
+        'name'        => $slug_page,
+        'post_type'   => 'visual_app_builder',
+        'post_status' => 'publish',
+        'numberposts' => 1,
+      );
+      # GET POST
+      $post = get_posts($args);
+      if (isset($post[0])) $post = $post[0];
+      if ($post){
+        $the_terms = json_decode(json_encode(get_the_terms($post->ID, 'admin_page_category')), true);
+        if (!$the_terms) $the_terms = array();
+        $main_page = ltrim($_GET['page'], 'fkm-');
+
+        if (array_search($main_page, array_column($the_terms, 'slug')) === false){
+          wp_die(__('Sorry, you are not allowed to access this page.'), __('No permits.', 'visual-app-builder'), [
+            'link_url'  => admin_url("admin.php?page=fkm-$main_page"),
+            'link_text' => 'Back to ' . get_admin_page_title()
+          ] );
+        }
+        $content = $post->post_content;
+      }
+    }
+
+    return $content;
   }
 
 
@@ -91,10 +114,12 @@ class Fkm_AdminPage {
 
   # CREACION DE LAS ADMIN PAGE PRINCIPALES
   public function fkm_vab_admin_page(){
+    // remove_submenu_page(FKM_TEXT_DOMAIN, 'edit.php?post_type=visual_app_builder');
+
     add_menu_page(
       __( FKM_VAB, 'visual-app-builder' ),
       __( FKM_VAB, 'visual-app-builder' ),
-      'administrator', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
+      'publish_posts', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
       FKM_TEXT_DOMAIN,
       array($this, 'fkm_vab_admin_page_content'),
       'dashicons-schedule',
@@ -104,20 +129,20 @@ class Fkm_AdminPage {
       FKM_TEXT_DOMAIN,
       __( FKM_VAB, 'visual-app-builder' ),
       __( FKM_VAB, 'visual-app-builder' ),
-      'administrator', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
+      'publish_posts', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
       FKM_TEXT_DOMAIN,
       array($this, 'fkm_vab_admin_page_content'),
       -1
     );
-
+    # PAGE TAXONOMY
     add_submenu_page(
       FKM_TEXT_DOMAIN,
-      __( 'Create admin pages', FKM_TEXT_DOMAIN ),
-      __( 'Create admin pages', FKM_TEXT_DOMAIN ),
-      'administrator', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
+      __( 'Create menu pages', 'visual-app-builder' ),
+      __( 'Create menu pages', 'visual-app-builder' ),
+      'publish_posts', # TODO: EN LAS CONFIGURACIONES, ELEGIR EL USUARIO PRINCIPAL PARA VAB
       'edit-tags.php?taxonomy=admin_page_category',
       null,
-      3
+      2
     );
     # TODO: MEJORA A FUTURO
     // add_submenu_page(
@@ -133,8 +158,7 @@ class Fkm_AdminPage {
   # SE AGREGA LA SUB ADMIN PAGE TAXONOMY A LA ADMIN PAGE PRICIPAL DE VAB
   public function fkm_add_pageTaxonomy_to_vab($parent_file){
     global $current_screen;
-    $taxonomy = $current_screen->taxonomy;
-    if ($taxonomy == 'admin_page_category'){
+    if ($current_screen->taxonomy == 'admin_page_category'){
       $parent_file = FKM_TEXT_DOMAIN;
     }
     return $parent_file;
@@ -142,11 +166,13 @@ class Fkm_AdminPage {
 
   # CREACION DE LAS ADMIN PAGES CREADAS POR EL USUARIO ATRAVES DE LA TAXONOMIA
   public function fkm_user_admin_page(){
-    # ADMIN PAGE USER
+    # SE AGREGAN LOS ESTILOS DEL TEMA
     add_action('admin_enqueue_scripts', array($this, 'fkm_user_admin_page_content_style'));
+
+    # ADMIN PAGE USER
     $parent_admin_pages = get_terms([
-      'taxonomy' => 'admin_page_category',
       'hide_empty' => false,
+      'taxonomy' => 'admin_page_category',
       'parent' => 0
     ]);
 
@@ -163,8 +189,8 @@ class Fkm_AdminPage {
       add_menu_page(
         __( $parent_admin_pages->name, 'visual-app-builder' ), # PAGE TITLE
         __( $parent_admin_pages->name, 'visual-app-builder' ), # MENU TITLE - BAR
-        $admin_page_permissions, # CAPACIBILITY TODO: AL USAR ROLES, SI SE ELIGE EDITOR, ADMIN NO PODRIA VERLO, BUSCAR ALTERNATIVA EN CAPACIBITYS QUE INCLUYAN A AMBOS
-        $parent_admin_pages->slug, # MENU URL
+        $admin_page_permissions,
+        'fkm-' . $parent_admin_pages->slug, # MENU URL
         array($this, 'fkm_user_admin_page_content'), # CALL TO ACTION
         $admin_page_icon, # ICON
         intval($admin_page_position) # POSITION
@@ -172,8 +198,8 @@ class Fkm_AdminPage {
       
       # GET SUB ADMIN PAGE
       $sub_admin_pages = get_terms([
-        'taxonomy' => 'admin_page_category',
         'hide_empty' => false,
+        'taxonomy' => 'admin_page_category',
         'parent' => $parent_admin_pages->term_id
       ]);
       if ($sub_admin_pages){
@@ -186,11 +212,11 @@ class Fkm_AdminPage {
           $subadmin_page_position    = (!empty($subadmin_page_position)) ? $subadmin_page_position : null; 
 
           add_submenu_page(
-            $parent_admin_pages->slug,
+            'fkm-' . $parent_admin_pages->slug,
             __( $sub_admin_page->name, FKM_TEXT_DOMAIN ),
             __( $sub_admin_page->name, FKM_TEXT_DOMAIN ),
             $subadmin_page_permissions,
-            $sub_admin_page->slug,
+            'fkm-' . $sub_admin_page->slug,
             array($this, 'fkm_user_admin_page_content'),
             intval($subadmin_page_position) // $val
           );
@@ -205,7 +231,7 @@ class Fkm_AdminPage {
     $pos = strpos(fkm_get_currentUser(), 'fkm_');
     if ($pos !== false && $pos == 0){
       if (strpos($_SERVER['REQUEST_URI'], 'upload.php') !== false || strpos($_SERVER['REQUEST_URI'], 'media-new.php')) {
-        wp_redirect(admin_url('index.php') );
+        wp_redirect(admin_url('index.php'));
         exit;
       }
       remove_menu_page('upload.php');
@@ -214,28 +240,18 @@ class Fkm_AdminPage {
 
   # SE CARGAN LOS SCRIPTS / STYLES DEL ADMIN
   public function fkm_user_admin_page_content_style() {
-    // TODO: CARGAR ESTILO PARA DARLE FORMA A LOS WIDGETS CARGADOS EN EL CONTENT DE LAS ADMIN PAGE USER
-    
-    // echo ABSPATH . 'wp-admin/load-styles.php';
-    // require ABSPATH . 'wp-admin/load-styles.php';
+    if (isset($_GET['page'])) {
+      $pos = strpos($_GET['page'], 'fkm-');
 
-  //  echo site_url('/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css');
-
-  //   wp_register_style('wp_admin_style', site_url('/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css'), array(), time());
-  //   wp_enqueue_style('wp_admin_style');
-
-  //   wp_register_style('mediaelement', site_url('/wp-includes/js/mediaelement/wp-mediaelement.min.css'), array(), time());
-  //   wp_enqueue_style('mediaelement');
-
-  //   wp_register_script('fkm_block', site_url('/wp-includes/js/dist/blocks.min.js'), array(), time());
-  //   wp_enqueue_script('fkm_block');
-
-
-    // $style_path = get_stylesheet_directory_uri() . '/style.css';
-    // wp_register_style( 'wp_admin_style',site_url('/wp-admin/css/wp-admin.min.css'), array(), time());
-    // wp_enqueue_style('wp_admin_style');
-    
-  }
+      if ($pos !== false && $pos == 0){
+        if (file_exists(get_template_directory() . '/style.css')) {
+          wp_register_style('fkm_theme_styles', get_stylesheet_directory_uri() . '/style.css', array(), time());
+          wp_enqueue_style ('fkm_theme_styles');
+        }
+      }
+    }
+      
+    }
 }
 
 

@@ -1,9 +1,5 @@
 <?php
 /*
-@package   Visual_App_Builder
-@author    Flikimax <info@flikimax.com>
-@link      flikimax.com
-@copyright 2021 Flikimax
 @wordpress-plugin
 Plugin Name:    Visual App Builder
 Plugin URI:     flikimax.com
@@ -11,8 +7,6 @@ Description:    Visual application builder.
 Version:        1.0
 Author:         Flikimax
 Author URI:     Flikimax.com 
-Text Domain:    visual-app-builder
-Domain Path:    /languages
 */
 
 if (!defined('ABSPATH')) exit(); 
@@ -21,8 +15,6 @@ class Fkm_VisualAppBuilder {
   function __construct(){
     $this->fkm_create_paths();
     add_action('init', array($this, 'fkm_init'), 0);
-   
-
   }
 
   function fkm_init(){
@@ -49,23 +41,23 @@ class Fkm_VisualAppBuilder {
     define('FKM_VAB', 'Visual App Builder');
     define('FKM_PLUGIN_PATH', plugin_dir_path(__FILE__));
     define('FKM_TEXT_DOMAIN', 'visual-app-builder');
-    define('FKM_VERSION', time());
+    # PLUGIN VERSION
+    $plugin_data = get_file_data(__FILE__, array('Version' => 'Version'), false);
+    $plugin_version = $plugin_data['Version'];
+    define('FKM_VERSION', time()); # $plugin_version
   }
 
   # LINK INFO PLUGIN
   public function fkm_settings_link ($links){
     $settings_link = array(
-        'settings' => '<a href="' . admin_url('admin.php?page=MyPluginPage' ) . '" style="font-weight: bold; color: green;">' .
-                        __('Settings Page', 'visual-app-builder') .
-                      '</a>',
+        'settings' => '<a href="' . admin_url('admin.php?page=' . FKM_TEXT_DOMAIN) . '" style="font-weight: bold; color: green;">' . __('VAB', 'visual-app-builder') . '</a>',
     );
     return array_merge($links, $settings_link);
   }
   # LINKS EXTRA DESCRIPCION PLUGIN
   public function fkm_filter_row_meta_plugin($links, $plugin_file){
     if ($plugin_file == plugin_basename(__FILE__)){
-      $links[] = "<a href='flikimax.com/docs' target='_blank'>" . __('Documentation') . "</a>";
-      // $links[] = "<div><a href='flikimax.com/docs' target='_blank'>" . __('Documentation') . "</a></div>";
+      $links[] = "<a href='https://flikimax.com/visual-app-builder' target='_blank'>" . __('Documentation') . "</a>";
     }
     return $links;
   }

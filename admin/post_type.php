@@ -32,26 +32,25 @@ function Fkm_postType(){
       'visual_app_builder', # post type name
       array(
         'labels' => array(
-  				'name' => __( 'Create menu pages' ),
-  				'all_items' => __( 'All Hierarchies' ),
-  				'edit_item' => __( 'Edit admin page' ),
-  				'menu_name' => __( 'Create admin pages' ), # TOOLBAR
-  				'update_item' => __( 'Update admin page' ),
-  				'search_items' => __( 'Search Hierarchies' ),
-  				'add_new_item' => __( 'Add new menu page' ),
-  				'new_item_name' => __( 'New admin page Name' ),
-  				'singular_name' => __( 'Create admin page' ),
-  				'popular_items' => __( 'Popular Hierarchies' ),
-  				'add_or_remove_items' => __( 'Add or remove admin page' ),
-  				'choose_from_most_used' => __( 'Choose from the most popular admin page' ),
-  				'separate_items_with_commas' => __( 'Separate admin page with commas' ),
-          'not_found' => 'No admin page found',
+  				'name' => __( 'Create Menu Pages', 'visual-app-builder' ),
+  				'all_items' => __( 'All', 'visual-app-builder' ),
+  				'edit_item' => __( 'Edit' ),
+  				'menu_name' => __( 'Menu Pages', 'visual-app-builder' ), # TOOLBAR
+  				'update_item' => __( 'Update', 'visual-app-builder' ),
+  				'search_items' => __( 'Search', 'visual-app-builder' ),
+  				'add_new_item' => __( 'Add' ),
+  				'new_item_name' => __( 'Add new', 'visual-app-builder' ),
+  				'singular_name' => __( 'Create', 'visual-app-builder' ),
+  				'popular_items' => __( 'Popular', 'visual-app-builder' ),
+  				'add_or_remove_items' => __( 'Add or remove', 'visual-app-builder' ),
+  				'choose_from_most_used' => __( 'Choose from the most popular' ),
+          'not_found' => __('No found', 'visual-app-builder'),
         ),
         'public' => true,
         'show_ui' => true,
         'query_var' => true,
         'show_in_rest' => true,
-        'capabilities' => array('post'),
+        'capabilities' => array('publish_posts'),
         'default_term' => array(),
         'hierarchical' => true,
         'menu_position' => 5,
@@ -67,36 +66,34 @@ function Fkm_postType(){
 
     # LABELS PARA EL CUSTOM  POST TYPE 
   	$labels = array(
-  		'name' => __( 'Admin Pages Content'),
-      'singular_name'      => __( 'Admin page' ),
-      'add_new'            => _x( 'Add new', 'visual-app-builder' ),
-      'add_new_item'       => __( 'Add new admin page'), # Add new admin page
-      'edit_item'          => __( 'Edit admin page' ),
-      'new_item'           => __( 'New admin page' ),
-      'view_item'          => __( 'Show admin page' ),
-      'search_items'       => __( 'Search admin page' ),
-      'not_found'          =>  __( 'No admin page found' ),
-      'not_found_in_trash' => __( 'No admin page found in the garbage can' ),
+  		'name' => __( 'Admin Menus Content'),
+      'singular_name'      => __( 'Admin Menu Content' ),
+      'add_new'            => __( 'Add new', 'visual-app-builder' ),
+      'add_new_item'       => __( 'Add new', 'visual-app-builder' ), # Add new admin page
+      'edit_item'          => __( 'Edit', 'visual-app-builder' ),
+      'new_item'           => __( 'New', 'visual-app-builder' ),
+      'view_item'          => __( 'Show', 'visual-app-builder' ),
+      'search_items'       => __( 'Search', 'visual-app-builder' ),
+      'not_found'          => (isset($_GET['s'])) ? __('No found: ' . $_GET['s'], 'visual-app-builder') :  __('No found', 'visual-app-builder'),
+      'not_found_in_trash' => __( 'No content page has been found in the recycle garbage can', 'visual-app-builder' ),
     );
 
     $args = array(
-      // 'menu_position'  => 3,
+      'supports'=> array('title','editor','excerpt', 'custom-fields'),
       'label' => __('visual_app_builder'),
       'labels' => $labels,
       'public' => true,
-      'supports'=> array('title','editor','excerpt', 'custom-fields'),
       'show_ui' => true,
       '_builtin' => false,
-      'menu_icon' => 'dashicons-schedule',
       'can_export' => true,
-      'taxonomies' => array( 'admin_page_category'),
-      'taxonomies' => array('Hierarchy'),
       'show_in_rest' => true,
       'map_meta_cap' => true,
       'hierarchical' => false,
-      'show_in_menu' => FKM_TEXT_DOMAIN,
-      'capability_type' => 'post', # CAPACIBILITY
       'show_in_nav_menus' => true,
+      'show_in_menu' => FKM_TEXT_DOMAIN,
+      'menu_icon' => 'dashicons-schedule',
+      'capabilities' => array('publish_posts'),
+      'taxonomies' => array('admin_page_category'),
       'rewrite' => array(
         "slug"       => '', # SE DEJA VACIO PARA QUE NO APAREZCA EN EL FrontEnd
         'with_front' => false,
@@ -206,7 +203,7 @@ function admin_page_category_editform_termmeta($term){
       </tr>
       <!-- PERMISOS -->
       <tr class="form-field form-required term-admin_page_permissions-wrap">
-        <th scope="row"><label for="admin_page_permissions">Permissions</label></th>
+        <th scope="row"><label for="admin_page_permissions"><?=__('Permissions', 'visual-app-builder'); ?></label></th>
         <td>
           <select name="admin_page_permissions" id="admin_page_permissions" class="postform" required><?php
             if (!isset($roles["fkm_{$term->slug}"])){ ?>
@@ -218,7 +215,7 @@ function admin_page_category_editform_termmeta($term){
           </select>
 
           <p class="description"><?=__('Required permission for the menu page.<br/>
-Note: If you add a new role, you will only see its menu page and its respective sub items.', 'visual-app-builder'); ?>
+            Note: If you add a new role, you will only see its menu page and its respective sub items.', 'visual-app-builder'); ?>
           </p>
         </td>
       </tr>
@@ -281,7 +278,6 @@ function fields_save_data_admin_page_category($term_id){
   }
 
 
-
   # SI EXISTE EL VALOR, SE TRAE
   $old_admin_page_content     = get_term_meta($term_id, 'admin_page_content', true);
   $old_admin_page_permissions = get_term_meta($term_id, 'admin_page_permissions', true);
@@ -299,13 +295,6 @@ function fields_save_data_admin_page_category($term_id){
 
   $admin_page_icon        = (isset($_POST['admin_page_icon'])) ? sanitize_text_field($_POST['admin_page_icon']) : null;
   $admin_page_position    = sanitize_text_field($_POST['admin_page_position']);
-
-  
-  # ACTUALIZACION DEL SLUG
-  // if ($_POST['action'] == 'editedtag' && isset($_POST['name'])){
-  //   $_POST['slug'] = str_replace(' ', '-', );
-  // }
-
 
 
   # PERMISOS
@@ -328,8 +317,6 @@ function fields_save_data_admin_page_category($term_id){
     );
   }
 
-
-  
   if ($_POST['action'] == 'add-tag' || $_POST['action'] == 'editedtag'){
     if (!isset($_POST['admin_page_hide_admin'])){ # AGREGAR CAP AL ADMIN
       $GLOBALS['wp_roles']->add_cap('administrator', $admin_page_permissions);
@@ -343,9 +330,6 @@ function fields_save_data_admin_page_category($term_id){
       $GLOBALS['wp_roles']->add_cap("fkm_{$parent->slug}", $admin_page_permissions);
     }
   }
-
-
-
 
   # SE ACTUALIZA EL NOMBRE DEL ROLE
   if ($_POST['action'] == 'editedtag' && !fkm_is_role_default($_POST['slug'])){
@@ -463,7 +447,7 @@ function limit_parents_wpse_106164( $args, $taxonomy ) {
     return $args;
 }
 
-if (isset($_GET['taxonomy']) && $_GET['taxonomy'] == 'admin_page_category'){
+if ((isset($_GET['taxonomy']) && $_GET['taxonomy'] == 'admin_page_category') || (isset($_GET['post_type']) && $_GET['post_type'] == 'visual_app_builder')){
   add_action('admin_enqueue_scripts', 'fkm_post_type_style_scritps'); # SE CARGAN LOS SCRIPTS Y CSS PARA POST TYPE
   function fkm_post_type_style_scritps(){
     wp_register_script('fkm_post_type_style', plugins_url(basename(FKM_PLUGIN_PATH) . "/admin/src/js/post_type.js"), array(), FKM_VERSION);

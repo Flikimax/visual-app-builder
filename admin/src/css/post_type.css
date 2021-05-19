@@ -1,3 +1,37 @@
+/* ADD POST */
+.post-type-visual_app_builder .wp-heading-inline {
+	color: #707070;
+	font-size: 35px;
+	font-weight: 700;
+	margin-right: 15px !important;
+}
+
+.post-type-visual_app_builder #doaction,
+.post-type-visual_app_builder #doaction2,
+.post-type-visual_app_builder #search-submit,
+.post-type-visual_app_builder #post-query-submit,
+.post-type-visual_app_builder .inline-edit-save button.save,
+.post-type-visual_app_builder .inline-edit-save button.cancel
+{
+	background: #2580EB !important;
+    color: white !important;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 500;
+	height: 30px;
+	transition: o.5s all;
+}
+.post-type-visual_app_builder #doaction:hover,
+.post-type-visual_app_builder #doaction2:hover,
+.post-type-visual_app_builder #search-submit:hover,
+.post-type-visual_app_builder #post-query-submit:hover,
+.post-type-visual_app_builder .page-title-action:hover
+{
+	background: #1e69c1 !important;
+}
+/* ADD POST */
+
+
 /* ADD */
 .taxonomy-admin_page_category .wrap.nosubsub *,
 .taxonomy-admin_page_category .wrap *
@@ -146,7 +180,9 @@
 }
 /* ICONOS */
 
-.taxonomy-admin_page_category form .submit input[type='submit'] {
+.taxonomy-admin_page_category form .submit input[type='submit'],
+.post-type-visual_app_builder a.page-title-action
+{
 	background: #2580EB;
 	color: white !important;
 	font-size: 16px;
