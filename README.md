@@ -11,7 +11,7 @@ La forma de extender este plugin es creando bloques Gutenberg para los post.
 
 Permite la creación del contenido que será usado por las páginas de menú.
 
-![Admin Menus Content](https:/flikimax.com/wp-content/uploads/2021/05/Admin-Menus-Content-Board.jpg)
+![Admin Menus Content](https:flikimax.com/wp-content/uploads/2021/05/Admin-Menus-Content-Board.jpg)
 
 ![](https:flikimax.com/wp-content/uploads/2021/05/Xukint-Content.jpg)
 
